@@ -1,0 +1,31 @@
+LassoCV
+alpha selected: 0.00321873732147517
+intercept: 67.2151371807001
+coefficients (on standardized inputs):
+  Attendance                               +2.286445
+  Hours_Studied                            +1.751818
+  Access_to_Resources_Low                  -0.828278
+  Parental_Involvement_Low                 -0.798095
+  Previous_Scores                          +0.702528
+  Tutoring_Sessions                        +0.624326
+  Family_Income_Low                        -0.533468
+  Parental_Involvement_Medium              -0.529477
+  Access_to_Resources_Medium               -0.509015
+  Peer_Influence_Positive                  +0.504462
+  Motivation_Level_Low                     -0.467045
+  Distance_from_Home_Near                  +0.395838
+  Family_Income_Medium                     -0.301713
+  Teacher_Quality_Low                      -0.289496
+  Extracurricular_Activities_Yes           +0.284124
+  Learning_Disabilities_Yes                -0.266184
+  Motivation_Level_Medium                  -0.265067
+  Peer_Influence_Neutral                   +0.262736
+  Teacher_Quality_Medium                   -0.254616
+  Internet_Access_Yes                      +0.252933
+  Parental_Education_Level_High School     -0.221578
+  Parental_Education_Level_Postgraduate    +0.207258
+  Physical_Activity                        +0.194080
+  Distance_from_Home_Moderate              +0.117209
+  Sleep_Hours                              -0.015032
+  Gender_Male                              -0.009432
+  School_Type_Public                       +0.000747

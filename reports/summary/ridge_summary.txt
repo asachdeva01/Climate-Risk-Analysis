@@ -1,0 +1,31 @@
+RidgeCV
+alpha selected: 10.0
+intercept: 67.2151371807001
+coefficients (on standardized inputs):
+  Attendance                               +2.285091
+  Hours_Studied                            +1.751970
+  Access_to_Resources_Low                  -0.832286
+  Parental_Involvement_Low                 -0.801971
+  Previous_Scores                          +0.704377
+  Tutoring_Sessions                        +0.626240
+  Family_Income_Low                        -0.540684
+  Parental_Involvement_Medium              -0.533769
+  Access_to_Resources_Medium               -0.513661
+  Peer_Influence_Positive                  +0.511370
+  Motivation_Level_Low                     -0.474592
+  Distance_from_Home_Near                  +0.408572
+  Family_Income_Medium                     -0.309593
+  Teacher_Quality_Low                      -0.294292
+  Extracurricular_Activities_Yes           +0.286654
+  Motivation_Level_Medium                  -0.272783
+  Peer_Influence_Neutral                   +0.270343
+  Learning_Disabilities_Yes                -0.268999
+  Teacher_Quality_Medium                   -0.258904
+  Internet_Access_Yes                      +0.255760
+  Parental_Education_Level_High School     -0.224041
+  Parental_Education_Level_Postgraduate    +0.208830
+  Physical_Activity                        +0.197570
+  Distance_from_Home_Moderate              +0.130019
+  Sleep_Hours                              -0.018142
+  Gender_Male                              -0.012853
+  School_Type_Public                       +0.004023

@@ -1,67 +1,49 @@
-# Climate Risk Analysis — IEE 578 Regression Analysis Project
+# Student Exam Performance — Regression Analysis
 
-## Project Overview
-Graduate-level regression analysis project for **IEE 578: Regression Analysis** (Spring 2026, Dr. Douglas C. Montgomery, ASU).
+Course project for **IEE 578: Regression Analysis** (Spring 2026, Dr. Douglas C. Montgomery, ASU).
 
 **Team:** Abhi Sachdeva, Amanda Hightower, Abishek Balasubramanian.
 
-**Research objective:** Model and predict the `climate_risk_index` (composite 0–100) from country-level climate, environmental, and human-activity indicators using regression analysis.
+## Problem
+Model and predict student `Exam_Score` from academic, behavioral, and demographic factors using multiple linear regression. Identify the most statistically significant predictors via EDA and stepwise selection, and compare MLR against Ridge / Lasso.
 
-**Data source:** Kaggle — [Climate Change and Global Warming](https://www.kaggle.com/datasets/algozee/climate-cahnge/data) (~1200 observations, 20 features, panel structure: country × year, early 1980s–2024).
+## Data
+[Kaggle — Student Exam Performance Factors](https://www.kaggle.com/datasets/grandmaster07/student-exam-performance-dataset-analysis). ~6600 student records, 20 columns (6 numeric, 13 categorical, 1 continuous target).
 
-**Response variable:** `climate_risk_index`
+## Pipeline
 
-**Predictor variables (per project proposal):**
-- `heatwave_days`, `drought_index`, `flood_events_count`
-- `deforestation_rate`, `fossil_fuel_consumption`, `co2_concentration_ppm`
-- `renewable_energy_share`, `forest_cover_percent`, `air_quality_index`
-
-Additional climate variables may be considered. Variable selection techniques determine the final subset.
-
----
-
-## Methodology (per proposal, Section 3.4)
-1. **EDA** — distributions, trends, outliers, predictor–response relationships
-2. **Multiple Linear Regression** — primary framework (continuous response)
-3. **Variable Selection** — stepwise, adjusted R², significance testing
-4. **Model Diagnostics** — linearity, homoscedasticity, normality, multicollinearity
-5. **Model Comparison** — alternative approaches (Ridge, Lasso) if MLR underperforms
-6. **Prediction & Validation** — train/test split, MSE / MAE / R²
-
-**Primary library:** `statsmodels` (inference: p-values, CIs, diagnostics).
-**Secondary:** `scikit-learn` (train/test split, regularized models, metrics).
-
----
-
-## Repository Structure
 ```
-Climate-Risk-Analysis/
-├── data/                    # Kaggle CSV lives here (public data, tracked in git)
-├── data_cleaning/           # Preprocessing pipeline (types, missing, dupes, outliers)
-├── feature_engineering/     # Derived features (transforms, encodings, interactions)
-├── exploratory_analysis/    # EDA notebook + stats/visualization helpers
-├── modeling/                # Regression pipeline (one model per helper file)
-│   └── helpers/
-│       ├── mlr.py           # Multiple linear regression (statsmodels OLS)
-│       ├── ridge.py         # Ridge regression (comparison model)
-│       ├── lasso.py         # Lasso regression (comparison model)
-│       ├── selection.py     # Variable selection (stepwise, AIC/BIC)
-│       ├── diagnostics.py   # Residual plots, VIF, normality, homoscedasticity
-│       ├── metrics.py       # MSE, MAE, R², adj R²
-│       ├── validation.py    # Train/test split
-│       └── save_outputs.py  # Persist summaries/metrics/coefficients to reports/
-└── reports/
-    ├── model_outputs/       # {model}_metrics.json, {model}_coefficients.csv
-    └── summary/             # {model}_summary.txt (statsmodels pretty printout)
+data/                  # input CSV
+data_cleaning/         # type inference, missing values, duplicates, outliers
+feature_engineering/   # one-hot encoding, transforms, interactions
+exploratory_analysis/  # eda.ipynb — justifies predictor selection
+modeling/              # MLR / Ridge / Lasso + variable selection + diagnostics
+reports/               # per-model metrics, coefficients, statsmodels summaries
 ```
 
-Each top-level directory has an **entry point script** that composes helpers. Helpers are split by core task so no single file grows too large (matches the style of the IDX-Exchange portfolio).
+## Setup
 
----
+```bash
+python3 -m venv climate
+source climate/bin/activate
+pip install -r requirements.txt
+```
 
-## Coding Conventions
-- Python package structure (underscores in directory names, `__init__.py` in each module).
-- One responsibility per helper file.
-- Entry points (`preprocess.py`, `add_new_features.py`, `fit_model.py`) only orchestrate — logic lives in `helpers/`.
-- Docstrings on every public function describing inputs, outputs, and the statistical/data step it performs.
-- `statsmodels` is preferred for regression fits that require inference; `sklearn` for regularized models and validation splits.
+## Usage
+
+**EDA (pick predictors):** open `exploratory_analysis/eda.ipynb`.
+
+**Fit the pipeline (all three models, ranked by adjusted R²):**
+```bash
+python -m modeling.fit_model --data data/StudentPerformanceFactors.csv --target Exam_Score
+```
+
+The pipeline auto-infers numeric vs. categorical columns, one-hot encodes the categoricals, splits train/test, fits each model, runs diagnostics, and saves artifacts to `reports/`.
+
+**Fit a specific model only:**
+```bash
+python -m modeling.fit_model --data data/StudentPerformanceFactors.csv --target Exam_Score --model mlr
+```
+
+## Dataset-agnostic
+To run on a different CSV, just pass new `--data` and `--target` flags. The pipeline infers column types, encodes categoricals, and chooses the best model by adjusted R² automatically.

@@ -1,8 +1,8 @@
 """Persist fitted-model artifacts to reports/.
 
 For each model writes three files:
-  reports/summary/{model_name}_summary.txt     statsmodels summary (human-readable)
-  reports/model_outputs/{model_name}_coefficients.csv   coefficient table with p-values
+  reports/summary/{model_name}_summary.txt          statsmodels summary or sklearn text summary
+  reports/model_outputs/{model_name}_coefficients.csv   coefficient table (with p-values for OLS)
   reports/model_outputs/{model_name}_metrics.json       structured metrics + diagnostics
 """
 import json
@@ -27,31 +27,46 @@ def save_model_outputs(model_name: str, model, metrics: dict, diagnostics: dict)
 
 
 def _save_summary(model_name: str, model):
-    """Dump the statsmodels .summary() text; for sklearn models, dump a minimal stand-in."""
+    """Dump the statsmodels .summary() text; for sklearn models dump a minimal stand-in."""
     path = SUMMARY_DIR / f"{model_name}_summary.txt"
-    if hasattr(model, 'summary'):
+    if hasattr(model, 'summary') and callable(getattr(model, 'summary')):
         text = str(model.summary())
     else:
         text = _sklearn_summary(model)
     path.write_text(text)
 
 
+def _extract_sklearn_estimator(model):
+    """If model is a sklearn Pipeline, return the final estimator; else return model."""
+    if hasattr(model, 'named_steps'):
+        return list(model.named_steps.values())[-1]
+    return model
+
+
 def _sklearn_summary(model) -> str:
-    """Minimal text summary for sklearn estimators (Ridge/Lasso)."""
-    lines = [f"{type(model).__name__}"]
-    if hasattr(model, 'alpha_'):
-        lines.append(f"alpha selected: {model.alpha_}")
-    if hasattr(model, 'intercept_'):
-        lines.append(f"intercept: {model.intercept_}")
-    if hasattr(model, 'coef_'):
-        lines.append("coefficients:")
-        for name, coef in zip(getattr(model, 'feature_names_in_', []), model.coef_):
-            lines.append(f"  {name}: {coef:.6f}")
+    """Minimal text summary for sklearn estimators (Ridge/Lasso), including Pipeline."""
+    est = _extract_sklearn_estimator(model)
+    lines = [f"{type(est).__name__}"]
+    if hasattr(est, 'alpha_'):
+        lines.append(f"alpha selected: {est.alpha_}")
+    if hasattr(est, 'intercept_'):
+        lines.append(f"intercept: {est.intercept_}")
+    if hasattr(est, 'coef_'):
+        feat_names = getattr(model, 'feature_names_in_', None)
+        if feat_names is None:
+            feat_names = getattr(est, 'feature_names_in_', None)
+        if feat_names is None:
+            feat_names = [f"x{i}" for i in range(len(est.coef_))]
+        lines.append("coefficients (on standardized inputs):")
+        # Sort by |coef| descending to make the summary scannable
+        pairs = sorted(zip(feat_names, est.coef_), key=lambda kv: -abs(kv[1]))
+        for name, coef in pairs:
+            lines.append(f"  {name:<40} {coef:+.6f}")
     return "\n".join(lines)
 
 
 def _save_coefficients(model_name: str, model):
-    """Save a CSV of coefficients (+ p-values / conf intervals when available)."""
+    """Save a CSV of coefficients (+ p-values / CIs when available)."""
     path = OUTPUTS_DIR / f"{model_name}_coefficients.csv"
 
     if hasattr(model, 'params'):  # statsmodels
@@ -64,12 +79,17 @@ def _save_coefficients(model_name: str, model):
             'ci_lower': model.conf_int()[0].values,
             'ci_upper': model.conf_int()[1].values,
         })
-    else:  # sklearn
-        names = list(getattr(model, 'feature_names_in_', []))
-        df = pd.DataFrame({'predictor': names, 'coefficient': model.coef_})
-        if hasattr(model, 'intercept_'):
+    else:  # sklearn (possibly Pipeline)
+        est = _extract_sklearn_estimator(model)
+        feat_names = getattr(model, 'feature_names_in_', None)
+        if feat_names is None:
+            feat_names = getattr(est, 'feature_names_in_', None)
+        if feat_names is None:
+            feat_names = [f"x{i}" for i in range(len(est.coef_))]
+        df = pd.DataFrame({'predictor': list(feat_names), 'coefficient': est.coef_})
+        if hasattr(est, 'intercept_'):
             df = pd.concat([
-                pd.DataFrame({'predictor': ['intercept'], 'coefficient': [float(model.intercept_)]}),
+                pd.DataFrame({'predictor': ['intercept'], 'coefficient': [float(est.intercept_)]}),
                 df,
             ], ignore_index=True)
 
