@@ -1,0 +1,35 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:     climate_risk_index   R-squared:                       0.054
+Model:                            OLS   Adj. R-squared:                  0.030
+Method:                 Least Squares   F-statistic:                     2.275
+Date:                Sun, 19 Apr 2026   Prob (F-statistic):             0.0173
+Time:                        17:07:48   Log-Likelihood:                -1601.1
+No. Observations:                 368   AIC:                             3222.
+Df Residuals:                     358   BIC:                             3261.
+Df Model:                           9                                         
+Covariance Type:            nonrobust                                         
+===========================================================================================
+                              coef    std err          t      P>|t|      [0.025      0.975]
+-------------------------------------------------------------------------------------------
+const                      83.9427     23.214      3.616      0.000      38.290     129.595
+heatwave_days              -0.0409      0.087     -0.473      0.636      -0.211       0.129
+drought_index              -1.0694      1.021     -1.047      0.296      -3.078       0.939
+flood_events_count          0.9217      0.354      2.606      0.010       0.226       1.617
+deforestation_rate          3.2300      1.503      2.148      0.032       0.273       6.187
+fossil_fuel_consumption    -0.0932      0.075     -1.243      0.215      -0.241       0.054
+co2_concentration_ppm      -0.0732      0.054     -1.359      0.175      -0.179       0.033
+renewable_energy_share     -0.1246      0.092     -1.355      0.176      -0.305       0.056
+forest_cover_percent        0.0285      0.085      0.335      0.738      -0.139       0.196
+air_quality_index          -0.0321      0.031     -1.032      0.303      -0.093       0.029
+==============================================================================
+Omnibus:                        3.800   Durbin-Watson:                   1.866
+Prob(Omnibus):                  0.150   Jarque-Bera (JB):                3.724
+Skew:                           0.205   Prob(JB):                        0.155
+Kurtosis:                       2.726   Cond. No.                     1.03e+04
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 1.03e+04. This might indicate that there are
+strong multicollinearity or other numerical problems.

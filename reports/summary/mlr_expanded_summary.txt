@@ -1,0 +1,45 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:     climate_risk_index   R-squared:                       0.109
+Model:                            OLS   Adj. R-squared:                  0.060
+Method:                 Least Squares   F-statistic:                     2.241
+Date:                Sun, 19 Apr 2026   Prob (F-statistic):            0.00232
+Time:                        17:11:00   Log-Likelihood:                -1590.1
+No. Observations:                 368   AIC:                             3220.
+Df Residuals:                     348   BIC:                             3298.
+Df Model:                          19                                         
+Covariance Type:            nonrobust                                         
+===========================================================================================
+                              coef    std err          t      P>|t|      [0.025      0.975]
+-------------------------------------------------------------------------------------------
+const                      88.8893     23.397      3.799      0.000      42.872     134.907
+heatwave_days              -0.0414      0.087     -0.477      0.634      -0.212       0.129
+drought_index              -0.9512      1.023     -0.930      0.353      -2.964       1.061
+flood_events_count          1.0133      0.353      2.871      0.004       0.319       1.707
+deforestation_rate          2.7854      1.509      1.846      0.066      -0.182       5.753
+fossil_fuel_consumption    -0.0969      0.075     -1.295      0.196      -0.244       0.050
+co2_concentration_ppm      -0.0721      0.054     -1.341      0.181      -0.178       0.034
+renewable_energy_share     -0.1816      0.094     -1.940      0.053      -0.366       0.002
+forest_cover_percent        0.0316      0.084      0.376      0.707      -0.134       0.197
+air_quality_index          -0.0173      0.031     -0.555      0.579      -0.079       0.044
+year_trend                 -0.1627      0.074     -2.193      0.029      -0.309      -0.017
+country_Brazil             -6.4295      4.578     -1.404      0.161     -15.434       2.575
+country_Canada              3.6606      4.389      0.834      0.405      -4.971      12.293
+country_China               0.4049      4.375      0.093      0.926      -8.199       9.009
+country_France             -5.3777      4.485     -1.199      0.231     -14.200       3.444
+country_Germany            -9.5477      4.489     -2.127      0.034     -18.378      -0.718
+country_India               3.0743      4.471      0.688      0.492      -5.720      11.869
+country_Pakistan           -2.6929      4.373     -0.616      0.538     -11.295       5.909
+country_UK                  0.2060      4.492      0.046      0.963      -8.630       9.042
+country_USA                -1.3929      4.686     -0.297      0.766     -10.609       7.823
+==============================================================================
+Omnibus:                        4.994   Durbin-Watson:                   1.904
+Prob(Omnibus):                  0.082   Jarque-Bera (JB):                5.070
+Skew:                           0.284   Prob(JB):                       0.0793
+Kurtosis:                       2.910   Cond. No.                     1.06e+04
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 1.06e+04. This might indicate that there are
+strong multicollinearity or other numerical problems.

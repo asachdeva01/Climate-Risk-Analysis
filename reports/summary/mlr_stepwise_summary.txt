@@ -1,0 +1,30 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:     climate_risk_index   R-squared:                       0.079
+Model:                            OLS   Adj. R-squared:                  0.064
+Method:                 Least Squares   F-statistic:                     5.187
+Date:                Sun, 19 Apr 2026   Prob (F-statistic):           3.90e-05
+Time:                        17:16:21   Log-Likelihood:                -1596.1
+No. Observations:                 368   AIC:                             3206.
+Df Residuals:                     361   BIC:                             3234.
+Df Model:                           6                                         
+Covariance Type:            nonrobust                                         
+==========================================================================================
+                             coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------------------
+const                     48.6979      4.977      9.786      0.000      38.911      58.485
+flood_events_count         1.0060      0.344      2.921      0.004       0.329       1.683
+country_Germany           -9.2331      3.291     -2.806      0.005     -15.705      -2.762
+year_trend                -0.1670      0.073     -2.296      0.022      -0.310      -0.024
+deforestation_rate         2.9241      1.467      1.993      0.047       0.038       5.810
+renewable_energy_share    -0.1782      0.090     -1.976      0.049      -0.356      -0.001
+country_Brazil            -6.7790      3.435     -1.974      0.049     -13.534      -0.025
+==============================================================================
+Omnibus:                        5.787   Durbin-Watson:                   1.917
+Prob(Omnibus):                  0.055   Jarque-Bera (JB):                5.843
+Skew:                           0.308   Prob(JB):                       0.0538
+Kurtosis:                       2.953   Cond. No.                         222.
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.

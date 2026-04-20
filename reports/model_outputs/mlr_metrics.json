@@ -1,0 +1,75 @@
+{
+  "metrics": {
+    "train": {
+      "mse": 352.10490755629746,
+      "rmse": 18.76445862678424,
+      "mae": 15.070033309081454,
+      "r2": 0.054094084364765926,
+      "adj_r2": 0.03031432670913159
+    },
+    "test": {
+      "mse": 485.50444010765125,
+      "rmse": 22.034165291829215,
+      "mae": 17.61277766014012,
+      "r2": -0.1992856971563779
+    },
+    "n_train": 368,
+    "n_test": 92,
+    "p": 9,
+    "aic": 3222.264692800032,
+    "bic": 3261.3455221817217,
+    "f_stat": 2.2747954435922844,
+    "f_pvalue": 0.017290843794056442
+  },
+  "diagnostics": {
+    "durbin_watson": 1.8660433609295606,
+    "shapiro_wilk": {
+      "statistic": 0.9915778337327918,
+      "p_value": 0.03464243508298595
+    },
+    "breusch_pagan": {
+      "lm_stat": 7.26649221615785,
+      "lm_p": 0.6093953028217116,
+      "f_stat": 0.8012699301875768,
+      "f_p": 0.6153417548749157
+    },
+    "vif": [
+      {
+        "predictor": "fossil_fuel_consumption",
+        "VIF": 1.0568510915312552
+      },
+      {
+        "predictor": "air_quality_index",
+        "VIF": 1.0507582461260252
+      },
+      {
+        "predictor": "forest_cover_percent",
+        "VIF": 1.049002287631682
+      },
+      {
+        "predictor": "drought_index",
+        "VIF": 1.0476762231888546
+      },
+      {
+        "predictor": "heatwave_days",
+        "VIF": 1.0426975138867494
+      },
+      {
+        "predictor": "renewable_energy_share",
+        "VIF": 1.0398058010559288
+      },
+      {
+        "predictor": "co2_concentration_ppm",
+        "VIF": 1.0349422148000018
+      },
+      {
+        "predictor": "deforestation_rate",
+        "VIF": 1.0310789606668673
+      },
+      {
+        "predictor": "flood_events_count",
+        "VIF": 1.0263906090031527
+      }
+    ]
+  }
+}
